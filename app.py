@@ -24,7 +24,7 @@ cursor.execute('''
 conn.commit() #save
 conn.close() #close
 
-#Create a query in the Database
+#Create route and query in the Database
 @app.route('/')
 def index():
     conn = sqlite3.connect('gestao_hospitalar.db')
@@ -32,4 +32,15 @@ def index():
     pacientes = cursor.fetchall()
     conn.close()
     return render_template('index.html', pacientes=pacientes)
+
+#Create route novo_paciente and methods
+@app.route('/novo_paciente', methods=['GET', 'POST'])
+def novo_paciente():
+    if request.method == 'POST':
+        nome = request.form['nome']
+        idade = request.form['idade']
+        sexo = request.form['sexo']
+        cpf = request.form['cpf']
+        endereco = request.form['endereco']
+        telefone = request.form['telefone']
 
