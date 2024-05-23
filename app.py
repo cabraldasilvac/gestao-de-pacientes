@@ -43,4 +43,16 @@ def novo_paciente():
         cpf = request.form['cpf']
         endereco = request.form['endereco']
         telefone = request.form['telefone']
+        #enter the database
+        conn = sqlite3.connect('gestao_hospitalar.db')
+        cursor = conn.cursor()
+        #synchronizes information with the database
+        cursor.execute('''
+            INSERT INTO pacientes(nome, idade, sexo, cpf, endereco, telefone)
+            VALUES(?, ?, ?, ?, ?, ?)        
+            ''', (nome, idade, sexo, cpf, endereco, telefone))
+        conn.commit()
+        conn.close()
+        return redirect(url_for('index.html'))
+    return render_template('novo_paciente.html')
 
