@@ -23,3 +23,12 @@ cursor.execute('''
 
 conn.commit() #save
 conn.close() #close
+
+@app.route('/')
+def index():
+    conn = sqlite3.connect('gestao_hospitalar.db')
+    cursor.execute('SELECT * FROM pacientes')
+    pacientes = cursor.fetchall()
+    conn.close()
+    return render_template('index.html', pacientes=pacientes)
+
