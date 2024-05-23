@@ -24,6 +24,7 @@ cursor.execute('''
 conn.commit() #save
 conn.close() #close
 
+#Create a query in the Database
 @app.route('/')
 def index():
     conn = sqlite3.connect('gestao_hospitalar.db')
