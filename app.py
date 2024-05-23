@@ -53,6 +53,16 @@ def novo_paciente():
             ''', (nome, idade, sexo, cpf, endereco, telefone))
         conn.commit()
         conn.close()
-        return redirect(url_for('index.html'))
+        return redirect(url_for('index'))
     return render_template('novo_paciente.html')
+
+# build submit button
+@app.route('/limpar_pacientes')
+def limpar_pacientes():
+    conn = sqlite3.connect('gestao_hospitalar.db')
+    cursor = conn.cursor()
+    cursor.execute('DELETE * FROM pacientes')
+    conn.commit()
+    conn.close()
+    return redirect(url_for('index'))
 
