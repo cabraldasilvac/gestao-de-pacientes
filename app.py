@@ -8,7 +8,7 @@ app = Flask(__name__)
 conn = sqlite3.connect('gestao_hospitalar.db')
 cursor = conn.cursor()
 
-#Create table if it doesn't exist
+# Create table if it doesn't exist
 cursor.execute(''' 
                CREATE TABLE IF NOT EXISTS pacientes(
                    id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -21,10 +21,12 @@ cursor.execute('''
                )
             ''')
 
-conn.commit() #save
-conn.close() #close
+conn.commit()
+conn.close()
 
-#Create route and query in the Database
+# Create route and query in the Database
+
+
 @app.route('/')
 def index():
     conn = sqlite3.connect('gestao_hospitalar.db')
@@ -33,7 +35,9 @@ def index():
     conn.close()
     return render_template('index.html', pacientes=pacientes)
 
-#Create route novo_paciente and methods
+# Create route novo_paciente and methods
+
+
 @app.route('/novo_paciente', methods=['GET', 'POST'])
 def novo_paciente():
     if request.method == 'POST':
@@ -43,10 +47,10 @@ def novo_paciente():
         cpf = request.form['cpf']
         endereco = request.form['endereco']
         telefone = request.form['telefone']
-        #enter the database
+        # enter the database
         conn = sqlite3.connect('gestao_hospitalar.db')
         cursor = conn.cursor()
-        #synchronizes information with the database
+        # synchronizes information with the database
         cursor.execute('''
             INSERT INTO pacientes(nome, idade, sexo, cpf, endereco, telefone)
             VALUES(?, ?, ?, ?, ?, ?)        
@@ -57,6 +61,8 @@ def novo_paciente():
     return render_template('novo_paciente.html')
 
 # build submit button
+
+
 @app.route('/limpar_pacientes')
 def limpar_pacientes():
     conn = sqlite3.connect('gestao_hospitalar.db')
@@ -65,4 +71,3 @@ def limpar_pacientes():
     conn.commit()
     conn.close()
     return redirect(url_for('index'))
-
