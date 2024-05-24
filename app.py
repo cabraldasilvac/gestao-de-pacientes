@@ -1,41 +1,37 @@
 import sqlite3
-
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-# Connection to database
-conn = sqlite3.connect('gestao_hospitalar.db')
-cursor = conn.cursor()
 
-# Create table if it doesn't exist
-cursor.execute(''' 
-               CREATE TABLE IF NOT EXISTS pacientes(
-                   id INTEGER PRIMARY KEY AUTOINCREMENT,
-                   nome TEXT NOT NULL,
-                   idade INTEGER,
-                   sexo TEXT,
-                   cpf TEXT UNIQUE,
-                   endereco TEXT,
-                   telefone TEXT
-               )
-            ''')
+def init_db():
+    with sqlite3.connect('gestao_hospitalar.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute(''' 
+                       CREATE TABLE IF NOT EXISTS pacientes(
+                           id INTEGER PRIMARY KEY AUTOINCREMENT,
+                           nome TEXT NOT NULL,
+                           idade INTEGER,
+                           sexo TEXT,
+                           cpf TEXT UNIQUE,
+                           endereco TEXT,
+                           telefone TEXT
+                       )
+                    ''')
+        conn.commit()
 
-conn.commit()
-conn.close()
 
-# Create route and query in the Database
+init_db()
 
 
 @app.route('/')
 def index():
-    conn = sqlite3.connect('gestao_hospitalar.db')
+    conn = sqlite3.connect('gestao_hospitalar.db', check_same_thread=False)
+    cursor = conn.cursor()
     cursor.execute('SELECT * FROM pacientes')
     pacientes = cursor.fetchall()
     conn.close()
     return render_template('index.html', pacientes=pacientes)
-
-# Create route novo_paciente and methods
 
 
 @app.route('/novo_paciente', methods=['GET', 'POST'])
@@ -47,10 +43,8 @@ def novo_paciente():
         cpf = request.form['cpf']
         endereco = request.form['endereco']
         telefone = request.form['telefone']
-        # enter the database
-        conn = sqlite3.connect('gestao_hospitalar.db')
+        conn = sqlite3.connect('gestao_hospitalar.db', check_same_thread=False)
         cursor = conn.cursor()
-        # synchronizes information with the database
         cursor.execute('''
             INSERT INTO pacientes(nome, idade, sexo, cpf, endereco, telefone)
             VALUES(?, ?, ?, ?, ?, ?)        
@@ -60,14 +54,16 @@ def novo_paciente():
         return redirect(url_for('index'))
     return render_template('novo_paciente.html')
 
-# build submit button
-
 
 @app.route('/limpar_pacientes')
 def limpar_pacientes():
-    conn = sqlite3.connect('gestao_hospitalar.db')
+    conn = sqlite3.connect('gestao_hospitalar.db', check_same_thread=False)
     cursor = conn.cursor()
-    cursor.execute('DELETE * FROM pacientes')
+    cursor.execute('DELETE FROM pacientes')
     conn.commit()
     conn.close()
     return redirect(url_for('index'))
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
