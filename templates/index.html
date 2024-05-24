@@ -10,8 +10,13 @@
   <div class="container">
     <h1>Lista de Pacientes: </h1>
     <ul>
-      {% for paciente in pacientes %}
-      <li>{{paciente[1]}} - {{paciente[2]}} anos - {{paciente[3]}}</li>
+      {% for paciente in pacientes %}<br>
+      <li>Nome: {{paciente[1]}}</li>
+      <li>Idade: {{paciente[2]}} anos </li>
+      <li>Sexo: {{paciente[3]}}</li>
+      <li>CPF: {{paciente[4]}}</li>
+      <li>Endereço: {{paciente[5]}}</li>
+      <li>Telefone: {{paciente[6]}}</li>
       {%endfor%}
     </ul>
     <a href="{{url_for('novo_paciente')}}"><button class="add-patient">Adicionar Novo Paciente</button></a>
