@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Cadastro de pacientes</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
 </head>
 <body>
@@ -14,7 +14,7 @@
       <li>{{paciente[1]}} - {{paciente[2]}} anos - {{paciente[3]}}</li>
       {%endfor%}
     </ul>
-    <a href="{{url_for('noco_paciente')}}"><button class="add-patient">Adicionar Novo Paciente</button></a>
+    <a href="{{url_for('novo_paciente')}}"><button class="add-patient">Adicionar Novo Paciente</button></a>
     <a href="{{url_for('limpar_pacientes')}}" class="clear-btn">Limpar Lista de Pacientes</a>
   </div>
 
