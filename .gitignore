@@ -1,0 +1,36 @@
+# Diretórios
+__pycache__
+venv/
+node_modules/
+
+# Arquivos
+.env
+*.db
+*.log
+*.txt
+coverage/
+htmlcov/
+tests/
+
+# Arquivos específicos do IDE
+*.idea/
+*.vscode/
+
+# Imagens e outros arquivos multimídia
+*.png
+*.jpg
+*.gif
+*.mp3
+*.mp4
+
+# Arquivos de documentação gerados
+docs/
+*.rst
+
+# Arquivos temporários
+tmp/
+*.tmp
+
+# Arquivos específicos do sistema operacional (ajuste conforme necessário)
+*~
+*.DS_Store
