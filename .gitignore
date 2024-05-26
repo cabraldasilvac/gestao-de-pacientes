@@ -16,13 +16,6 @@ tests/
 *.idea/
 *.vscode/
 
-# Imagens e outros arquivos multimídia
-*.png
-*.jpg
-*.gif
-*.mp3
-*.mp4
-
 # Arquivos de documentação gerados
 docs/
 *.rst
